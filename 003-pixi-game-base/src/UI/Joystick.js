@@ -1,3 +1,5 @@
+import { normalize } from "../utils";
+
 export class Joystick extends PIXI.utils.EventEmitter {
   static EVENTS = {
     INPUT: "INPUT",
@@ -13,20 +15,30 @@ export class Joystick extends PIXI.utils.EventEmitter {
     graphics.endFill();
     this.view.addChild(graphics);
 
-    this.view.hitArea = new PIXI.Circle(0, 0, 75);
+    this.view.hitArea = new PIXI.Circle(0, 0, 150);
+    const hitCircle = new PIXI.Graphics();
+    hitCircle.beginFill(color);
+    hitCircle.drawCircle(this.view.hitArea.x, this.view.hitArea.y, this.view.hitArea.radius);
+    hitCircle.endFill();
+    hitCircle.alpha = 0.04;
+    this.view.addChild(hitCircle);
+
     this.view.interactive = true;
     this.view.cursor = "pointer";
     const press = (val) => {
       this.pressed = val;
       graphics.tint = val ? 0xaaaaaa : 0xffffff;
-      if (!val) graphics.position.set(0, 0);
-      this.direction = graphics.position.clone();
-      this.emitUpdate()
+      if (!val) {
+        graphics.position.set(0, 0);
+      }
+      this.direction.copyFrom(graphics.position);
+      this.emitUpdate();
     };
 
     this.view.on("pointerdown", (e) => {
-      press(true);
       this.view.toLocal(e.global, null, graphics.position);
+      press(true);
+      this.direction.copyFrom(graphics.position);
     });
     this.view.on("pointerup", () => {
       press(false);
@@ -34,10 +46,14 @@ export class Joystick extends PIXI.utils.EventEmitter {
     this.view.on("pointerupoutside", () => {
       press(false);
     });
+    this.view.on("pointerout", () => {
+      press(false);
+    });
     this.view.on("pointermove", (e) => {
       if (this.pressed) {
         this.view.toLocal(e.global, null, graphics.position);
-        this.direction.copyFrom(graphics.position.clone());
+        // normalize(graphics.position);
+        this.direction.copyFrom(graphics.position);
         this.emitUpdate();
       }
     });

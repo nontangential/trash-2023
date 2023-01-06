@@ -4,7 +4,7 @@ export class GameObject {
   view = new PIXI.Container();
   velocity = new PIXI.Point(0, 0);
   direction = new PIXI.Point(0, 0);
-  maxVelocity = 5;
+  maxVelocity = 1;
   // acceleration = new PIXI.Point(0, 0);
   constructor() {
     const graphics = new PIXI.Graphics();
@@ -12,6 +12,7 @@ export class GameObject {
     graphics.drawRect(0, 0, 50, 50);
     graphics.endFill();
     this.view = graphics;
+    this.view.pivot.set(25, 25);
   }
   update(delta) {
     // this.velocity.x += this.acceleration.x * delta;

@@ -3,6 +3,7 @@ import { Joystick } from "../UI/Joystick";
 import { GameObject } from "./GameObject";
 
 export class Player extends GameObject {
+  maxVelocity = 5;
   constructor() {
     super();
     this.view.tint = 0x84cc16;
@@ -36,6 +37,7 @@ export class Player extends GameObject {
   connectJoystick(joystick) {
     joystick.on(Joystick.EVENTS.INPUT, ({direction}) => {
       this.direction.copyFrom(direction);
+      console.log(direction)
     })
   }
 }
