@@ -1,4 +1,4 @@
-import { KeyboardManager } from "../KeyboardManager";
+import { KeyboardManager } from "../browserTools/KeyboardManager";
 import { Joystick } from "../UI/Joystick";
 import { GameObject } from "./GameObject";
 

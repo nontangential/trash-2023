@@ -2,7 +2,7 @@ import { Background } from "./GameObjects/Background";
 import { EnemiesManager } from "./GameObjects/EnemiesManager";
 import { Player } from "./GameObjects/Player";
 import { initializeGlobals } from "./globals";
-import { KeyboardManager } from "./KeyboardManager";
+import { KeyboardManager } from "./browserTools/KeyboardManager";
 import { UI } from "./UI/UI";
 
 // const viewTree = [

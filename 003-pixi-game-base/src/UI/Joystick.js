@@ -1,5 +1,3 @@
-import { normalize } from "../utils";
-
 export class Joystick extends PIXI.utils.EventEmitter {
   static EVENTS = {
     INPUT: "INPUT",

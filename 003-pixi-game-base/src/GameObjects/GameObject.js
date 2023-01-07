@@ -1,4 +1,4 @@
-import { magnitude } from "../utils";
+import { magnitude } from "../utils/utils";
 
 export class GameObject {
   view = new PIXI.Container();

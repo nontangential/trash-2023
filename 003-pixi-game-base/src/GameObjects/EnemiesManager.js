@@ -1,5 +1,5 @@
 import { getPlayerPosition, getScreenSize } from "../globals";
-import { difference, timer, normalize } from "../utils";
+import { difference, timer, normalize } from "../utils/utils";
 import { Enemy } from "./Enemy";
 
 export class EnemiesManager {
@@ -14,14 +14,20 @@ export class EnemiesManager {
   spawn() {
     const enemy = new Enemy();
     const {width, height} = getScreenSize();
-    enemy.view.position.set(Math.random() * width - width/2, Math.random() * height - height/2);
+    const playerPos = getPlayerPosition();
+    enemy.view.position.set(Math.random(), Math.random());
 
 
     if (Math.random() > .5) {
-      enemy.view.position.x = Math.random() > .5 ? -width/2 : width/2;
+      enemy.view.position.x = Math.random() > .5 ? 0 : 1;
     } else {
-      enemy.view.position.y = Math.random() > .5 ? -height/2 : height/2;
+      enemy.view.position.y = Math.random() > .5 ? 0 : 1;
     }
+    enemy.view.position.x *= width;
+    enemy.view.position.x -= width/2 - playerPos.x;
+    enemy.view.position.y *= height;
+    enemy.view.position.y -= height/2 - playerPos.y;
+
     
     this.list.push(enemy);
     this.view.addChild(enemy.view);
@@ -31,8 +37,8 @@ export class EnemiesManager {
 
     this.list.forEach(en => {
       const d = difference(en.view.position, getPlayerPosition());
-      const direction = normalize(d);
-      en.direction.copyFrom(direction);
+
+      en.direction.copyFrom(d);
 
       en.update(delta);
     })
