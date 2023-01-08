@@ -29,6 +29,7 @@ export const isMobile = function() {
 };
 
 
+// TODO: destroy, pause on alt+tab
 export const timer = function(cb, time, ctx){
   let start = performance.now();
   return {

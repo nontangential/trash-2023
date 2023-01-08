@@ -1,6 +1,6 @@
-import { KeyboardManager } from "../browserTools/KeyboardManager";
-import { Joystick } from "../UI/Joystick";
-import { GameObject } from "./GameObject";
+import { KeyboardManager } from "../../browserTools/KeyboardManager";
+import { Joystick } from "../../UI/Joystick";
+import { GameObject } from "../GameObject";
 
 export class Player extends GameObject {
   maxVelocity = 5;
@@ -37,7 +37,6 @@ export class Player extends GameObject {
   connectJoystick(joystick) {
     joystick.on(Joystick.EVENTS.INPUT, ({direction}) => {
       this.direction.copyFrom(direction);
-      console.log(direction)
     })
   }
 }

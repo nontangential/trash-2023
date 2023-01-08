@@ -1,18 +1,19 @@
 
-let player = null;
-let app = null;
-
-export const initializeGlobals = function(o) {
-    player = o.player;
-    app = o.app;
-}
-
-export const getPlayerPosition = () => player.view.position
+export const getPlayerPosition = () => {
+  return globals.game.player.view.position;
+};
 
 export const getScreenSize = () => {
-  return {width: app.renderer.width, height: app.renderer.height};
-}
+  return { width: globals.game.renderer.width, height: globals.game.renderer.height };
+};
 
 export const getRenderer = () => {
-  return app.renderer;
+  return globals.game.renderer;
+};
+
+
+const globals = {
+  game: undefined
 }
+
+export default globals;

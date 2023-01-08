@@ -1,5 +1,5 @@
-import { getPlayerPosition, getScreenSize } from "../globals";
-import { difference, timer, normalize } from "../utils/utils";
+import { getPlayerPosition, getScreenSize } from "../../globals";
+import { difference, timer, normalize } from "../../utils/utils";
 import { Enemy } from "./Enemy";
 
 export class EnemiesManager {

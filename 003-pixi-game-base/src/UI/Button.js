@@ -4,11 +4,11 @@ export class Button extends PIXI.utils.EventEmitter {
   };
   view = new PIXI.Container();
   pressed = false;
-  constructor(text = null, color = 0xffffff) {
+  constructor(text = null, color = 0xffffff, shape = new PIXI.Rectangle(0, 0, 100, 100)) {
     super();
     const graphics = new PIXI.Graphics();
     graphics.beginFill(color);
-    graphics.drawRect(0, 0, 100, 100);
+    graphics.drawShape(shape);
     graphics.endFill();
     this.view.addChild(graphics);
 
