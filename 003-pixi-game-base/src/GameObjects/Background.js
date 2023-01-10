@@ -1,12 +1,10 @@
-import { getRenderer, getScreenSize } from "../globals";
+import { BASIC_ASSETS } from "../assetManagement/BasicAssets";
+import { getRenderer, getScreenSize } from "../globalGameAPI";
 
 export class Background {
   view = new PIXI.Container();
   constructor() {
-    const bg = this.view = new PIXI.Graphics();
-    bg.beginFill(0x27272a);
-    bg.drawRect(0, 0, 50, 50);
-    bg.endFill();
+    const bg = this.view = BASIC_ASSETS.SQUARE_100(0x27272a);
     bg.alpha = 0.99;
 
     const screenSize = getScreenSize();

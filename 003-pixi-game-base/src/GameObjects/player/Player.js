@@ -4,11 +4,12 @@ import { GameObject } from "../GameObject";
 
 export class Player extends GameObject {
   maxVelocity = 5;
-  constructor() {
-    super();
-    this.view.tint = 0x84cc16;
+  constructor(view) {
+    super(view);
+    console.log(this)
+    // this.view.tint = 0x84cc16;
   }
-  connectWSAD(keyboard) {    
+  connectKeyboard(keyboard) {    
     // go in direction of last pressed keys
     keyboard.on(KeyboardManager.EVENTS.KEYDOWN, ({ key }) => {
       if (key === "w") {

@@ -3,21 +3,34 @@ export class KeyboardManager extends PIXI.utils.EventEmitter {
     KEYDOWN: "KEYDOWN",
     KEYDOWN: "KEYUP",
   };
-  keys = { w: 0, s: 0, a: 0, d: 0, 1: 0, 0: 0 };
+  keys = { w: false, s: false, a: false, d: false, 1: false, 0: false };
+  enabled = false;
   constructor() {
     super();
-    window.addEventListener("keydown", this.onKeyDown);
-    window.addEventListener("keyup", this.onKeyUp);
+  }
+  enable() {
+    if (!this.enabled) {
+      this.enabled = true;
+      window.addEventListener("keydown", this.onKeyDown);
+      window.addEventListener("keyup", this.onKeyUp);
+    }
+  }
+  disable() {
+    if (this.enabled) {
+      this.enabled = false;
+      window.removeEventListener("keydown", this.onKeyDown);
+      window.removeEventListener("keyup", this.onKeyUp);
+    }
   }
   onKeyDown = ({ key }) => {
     if (key in this.keys) {
-      this.keys[key] = 1;
+      this.keys[key] = true;
       this.emit(KeyboardManager.EVENTS.KEYDOWN, { key });
     }
   };
   onKeyUp = ({ key }) => {
     if (key in this.keys) {
-      this.keys[key] = 0;
+      this.keys[key] = false;
       this.emit(KeyboardManager.EVENTS.KEYUP, { key });
     }
   };

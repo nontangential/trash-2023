@@ -1,5 +1,5 @@
 export const magnitude = function(point) {
-    return Math.hypot(point.x, point.y)
+    return Math.hypot(point.x, point.y);
 }
 
 export const normalize = function(point) {

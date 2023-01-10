@@ -1,16 +1,15 @@
+import { BASIC_ASSETS } from "../assetManagement/BasicAssets";
+
 export class Button extends PIXI.utils.EventEmitter {
   static EVENTS = {
     PRESSED: "PRESSED",
   };
   view = new PIXI.Container();
   pressed = false;
-  constructor(text = null, color = 0xffffff, shape = new PIXI.Rectangle(0, 0, 100, 100)) {
+  constructor(text = null, color = 0xffffff) {
     super();
-    const graphics = new PIXI.Graphics();
-    graphics.beginFill(color);
-    graphics.drawShape(shape);
-    graphics.endFill();
-    this.view.addChild(graphics);
+    const buttonView = BASIC_ASSETS.SQUARE_100(color);
+    this.view.addChild(buttonView);
 
     if (text) {
       const label = new PIXI.Text(text);
@@ -19,19 +18,19 @@ export class Button extends PIXI.utils.EventEmitter {
       this.view.addChild(label);
     }
 
-    graphics.interactive = true;
-    graphics.cursor = "pointer";
+    this.view.interactive = true;
+    this.view.cursor = "pointer";
     const press = (val) => {
       this.pressed = val;
-      graphics.tint = val ? 0xdadada : 0xffffff;
+      buttonView.tint = val ? 0xdadada : 0xffffff;
     };
-    graphics.on("pointerdown", () => {
+    this.view.on("pointerdown", () => {
       press(true);
     });
-    graphics.on("pointerup", () => {
+    this.view.on("pointerup", () => {
       press(false);
     });
-    graphics.on("pointerupoutside", () => {
+    this.view.on("pointerupoutside", () => {
       press(false);
     });
   }

@@ -1,3 +1,4 @@
+import { BASIC_ASSETS } from "../assetManagement/BasicAssets";
 import { magnitude } from "../utils/utils";
 
 export class GameObject {
@@ -6,12 +7,8 @@ export class GameObject {
   direction = new PIXI.Point(0, 0);
   maxVelocity = 1;
   // acceleration = new PIXI.Point(0, 0);
-  constructor() {
-    const graphics = new PIXI.Graphics();
-    graphics.beginFill(0xffffff);
-    graphics.drawRect(0, 0, 50, 50);
-    graphics.endFill();
-    this.view = graphics;
+  constructor(view = BASIC_ASSETS.SQUARE_100) {
+    this.view = view();
     this.view.pivot.set(25, 25);
   }
   update(delta) {
@@ -26,10 +23,15 @@ export class GameObject {
     // this.view.x += this.velocity.x * delta;
     // this.view.y += this.velocity.y * delta;
 
+    // TODO: consider Phil Nowell method
+    // console.log(
+      // x * Math.sqrt(1 - (y * y) / 2),
+      // y * Math.sqrt(1 - (x * x) / 2)
+    // );
 
-    const dirNormal = magnitude(this.direction);
-    this.velocity.x = (this.direction.x / dirNormal * this.maxVelocity) || 0;
-    this.velocity.y = (this.direction.y / dirNormal * this.maxVelocity) || 0;
+    const dirMagnitude = magnitude(this.direction);
+    this.velocity.x = (this.direction.x / dirMagnitude) * this.maxVelocity || 0;
+    this.velocity.y = (this.direction.y / dirMagnitude) * this.maxVelocity || 0;
 
     this.view.x += this.velocity.x * delta;
     this.view.y += this.velocity.y * delta;

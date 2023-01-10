@@ -1,4 +1,5 @@
-import { AssetManager } from "./assetTools/AssetManager";
+import { AssetManager } from "./assetManagement/AssetManager";
+import { KNOWN_ASSETS } from "./assetManagement/knownAssets";
 import { KeyboardManager } from "./browserTools/KeyboardManager";
 import { Background } from "./GameObjects/Background";
 import { EnemiesManager } from "./GameObjects/enemies/EnemiesManager";
@@ -6,7 +7,7 @@ import { Player } from "./GameObjects/player/Player";
 import { CollisionManager } from "./gameTools/CollisionManager";
 import { EffectsManager } from "./gameTools/EffectsManager";
 import { ProjectileManager } from "./gameTools/ProjectileManager";
-import globals from "./globals";
+import { setGlobalGameInstance } from "./globalGameAPI";
 import { UI } from "./UI/UI";
 
 // const viewTree = [
@@ -24,89 +25,104 @@ import { UI } from "./UI/UI";
 // ];
 
 export class Game {
+  static ASSETS = {
+    BUTTON: "BUTTON",
+    JOYSTICK: "JOYSTICK",
+    PLAYER: "PLAYER",
+    ENEMY: "ENEMY",
+    LIGHTNING_BOLT: "LIGHTNING_BOLT",
+  };
+
   view = new PIXI.Container();
 
   renderer;
   ticker;
-  
+
+  assetMap;
   assetManager;
   
-  keyboardManager;
 
-  ui;
+
+  background;
   player;
-  enemiesManager;
+  ui;
+  gameStage;
 
+  keyboardManager;
   effectsManager;
   collisionManager;
   projectileManager;
+  enemiesManager;
 
-  constructor(app) {
-    this.initialize();
+  constructor(app, assetMap, assetList) {
     this.renderer = app.renderer;
     this.ticker = app.ticker;
+
+    this.assetMap = assetMap;
+    this.assetList = assetList;
   }
 
   async initialize() {
-    globals.game = this;
-
-    // SYSTEMS
-    const assetManager = this.assetManager = new AssetManager();
-    const keyboardManager = this.keyboardManager = new KeyboardManager();
-
-    // WAIT FOR ASSETS();
-    await assetManager.load();
-
-    // JUST VIEWS
-    const bg = new Background();
-    const gameStage = new PIXI.Container();
-
-    // KEY VIEWS
-    const ui = this.ui = new UI();
-    const player = this.player = new Player();
-    const enemiesManager = this.enemiesManager = new EnemiesManager();
-
-    // IN-GAME SYSTEMS
-    const effectsManager = this.effectsManager = new EffectsManager();
-    const collisionManager = this.collisionManager = new CollisionManager();
-    const projectileManager = this.projectileManager = new ProjectileManager();
+    setGlobalGameInstance(this);
+    
+    this.assetManager = new AssetManager();
+    this.assetManager.mapAssets(this.assetMap);
+    const assetListLoaded = this.assetManager.loadAssets(this.assetList);
+    const assetsGenrated = this.assetManager.generateAssets();
 
 
-        
-    player.connectWSAD(keyboardManager);
-    if (ui.joystick) {
-      player.connectJoystick(ui.joystick)
+    this.keyboardManager = new KeyboardManager();
+    this.effectsManager = new EffectsManager();
+    this.collisionManager = new CollisionManager();
+    this.projectileManager = new ProjectileManager();
+    this.enemiesManager = new EnemiesManager();
+
+    await assetListLoaded;
+    await assetsGenrated;
+    await this.initializeViews();
+  }
+
+  async initializeViews() {  
+    this.background = new Background();
+    this.player = new Player(this.assetManager.assetMap.get(KNOWN_ASSETS.PLAYER));
+    this.ui = new UI();
+    this.gameStage = new PIXI.Container();
+
+
+    this.view.addChild(this.background.view);
+    this.view.addChild(this.gameStage);
+      this.gameStage.addChild(this.enemiesManager.view);
+      this.gameStage.addChild(this.player.view);
+      this.gameStage.addChild(this.projectileManager.view);
+      this.gameStage.addChild(this.effectsManager.view);
+    this.view.addChild(this.ui.view);
+  }
+
+  start() {
+    this.enemiesManager.initialize();
+    this.effectsManager.initialize();
+    this.keyboardManager.enable();
+
+    this.player.connectKeyboard(this.keyboardManager);
+    if (this.ui.joystick) {
+      this.player.connectJoystick(this.ui.joystick)
     }
-
 
 
     // CAMERA
     const centerCamera = () => {
-      gameStage.pivot.set(
-        -this.renderer.width / 2 + player.view.x,
-        -this.renderer.height / 2 + player.view.y
+      this.gameStage.pivot.set(
+        -this.renderer.width / 2 + this.player.view.x,
+        -this.renderer.height / 2 + this.player.view.y
       );
     }
     this.ticker.add(centerCamera);
 
-
-    // VIEW TREE SETUP
-    this.view.addChild(bg.view);
-
-    gameStage.addChild(enemiesManager.view);
-    gameStage.addChild(player.view);
-    // gameStage.addChild(projectileManager.view);
-    gameStage.addChild(effectsManager.view);
-
-    this.view.addChild(gameStage);
-    this.view.addChild(ui.view);
-
-
     // START TICKERS
-    this.ticker.add(player.update, player);
-    this.ticker.add(enemiesManager.update, enemiesManager);
-    this.ticker.add(effectsManager.update, effectsManager);
-    this.ticker.add(collisionManager.update, collisionManager);
-    this.ticker.add(projectileManager.update, projectileManager);
+    this.ticker.add(this.player.update, this.player);
+    this.ticker.add(this.enemiesManager.update, this.enemiesManager);
+    this.ticker.add(this.effectsManager.update, this.effectsManager);
+    this.ticker.add(this.collisionManager.update, this.collisionManager);
+    this.ticker.add(this.projectileManager.update, this.projectileManager);
   }
 }

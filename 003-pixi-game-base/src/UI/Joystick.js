@@ -1,3 +1,5 @@
+import { BASIC_ASSETS } from "../assetManagement/BasicAssets";
+
 export class Joystick extends PIXI.utils.EventEmitter {
   static EVENTS = {
     INPUT: "INPUT",
@@ -7,10 +9,8 @@ export class Joystick extends PIXI.utils.EventEmitter {
   direction = new PIXI.Point();
   constructor(color = 0xffffff) {
     super();
-    const graphics = new PIXI.Graphics();
-    graphics.beginFill(color);
-    graphics.drawCircle(0, 0, 50);
-    graphics.endFill();
+    
+    const graphics = BASIC_ASSETS.CIRCLE_100(color);
     this.view.addChild(graphics);
 
     this.view.hitArea = new PIXI.Circle(0, 0, 150);
