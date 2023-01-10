@@ -57,7 +57,7 @@ export class Game {
   constructor(app, assetMap, assetList) {
     this.renderer = app.renderer;
     this.ticker = app.ticker;
-
+console.log(app.ticker)
     this.assetMap = assetMap;
     this.assetList = assetList;
   }

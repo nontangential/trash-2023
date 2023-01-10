@@ -6,6 +6,7 @@ export class Player extends GameObject {
   maxVelocity = 5;
   constructor(view) {
     super(view);
+    this.view.scale.set(0.5);
     this.view.tint = 0x84cc16;
   }
   connectKeyboard(keyboard) {    

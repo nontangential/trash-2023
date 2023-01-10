@@ -1,5 +1,5 @@
 import { KNOWN_ASSETS } from "../../assetManagement/knownAssets";
-import { getAssetManager, getPlayerPosition, getScreenSize } from "../../globalGameAPI";
+import { getAssetManager, getPlayerPosition, getScreenSize, getTicker } from "../../globalGameAPI";
 import { difference, timer } from "../../utils/utils";
 import { Enemy } from "./Enemy";
 
@@ -31,6 +31,7 @@ export class EnemiesManager {
     enemy.view.position.x -= width / 2 - playerPos.x;
     enemy.view.position.y *= height;
     enemy.view.position.y -= height / 2 - playerPos.y;
+    enemy.view.scale.set(0.5);
 
     this.list.push(enemy);
     this.view.addChild(enemy.view);
