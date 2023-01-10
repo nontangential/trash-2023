@@ -30,7 +30,7 @@ export const BASIC_ASSETS = {
           i < 10;
           i++
         ) {
-          g.lineStyle(w, 0x7DD3FC, 1);//1/i);
+          g.lineStyle(w, 0x7DD3FC, 1/i);
     
           g.moveTo(x, y);
           x += Math.random() * l - l / 2;

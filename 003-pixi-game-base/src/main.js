@@ -1,7 +1,11 @@
+// import 'https://cdn.jsdelivr.net/npm/modern-css-reset@1.4.0/dist/reset.min.css';
+// import 'https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.0.5/pixi.min.js';
+// import "pixi.js";
+
+
 import { BASIC_ASSETS } from "./assetManagement/BasicAssets";
 import { KNOWN_ASSETS } from "./assetManagement/knownAssets";
 import { Game } from "./Game";
-
 
 const app = new PIXI.Application({
   resizeTo: window,
@@ -16,7 +20,9 @@ document.body.appendChild(app.view);
 const assetList = [
   {name: "bunny", url: "assets/bunny.png"},
   {name: "txtr", url: "assets/txtr.png"}
-]
+];
+
+
 
 const assetMap = {
   [KNOWN_ASSETS.BUTTON]: BASIC_ASSETS.SQUARE_100,
@@ -27,11 +33,10 @@ const assetMap = {
   [KNOWN_ASSETS.LIGHTNING_BOLT]: BASIC_ASSETS.LIGHTNING_BOLT
 };
 
-window.__stage = app.stage
+window.__stage = app.stage;
 
 const game = new Game(app, assetMap, assetList);
 game.initialize().then(() => {
   app.stage.addChild(game.view);
   game.start();
 });
-

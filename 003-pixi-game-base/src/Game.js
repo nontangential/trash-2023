@@ -5,7 +5,7 @@ import { Background } from "./GameObjects/Background";
 import { EnemiesManager } from "./GameObjects/enemies/EnemiesManager";
 import { Player } from "./GameObjects/player/Player";
 import { CollisionManager } from "./gameTools/CollisionManager";
-import { EffectsManager } from "./gameTools/EffectsManager";
+import { EffectsManager } from "./effects/EffectsManager";
 import { ProjectileManager } from "./gameTools/ProjectileManager";
 import { setGlobalGameInstance } from "./globalGameAPI";
 import { UI } from "./UI/UI";

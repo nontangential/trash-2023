@@ -6,8 +6,7 @@ export class Player extends GameObject {
   maxVelocity = 5;
   constructor(view) {
     super(view);
-    console.log(this)
-    // this.view.tint = 0x84cc16;
+    this.view.tint = 0x84cc16;
   }
   connectKeyboard(keyboard) {    
     // go in direction of last pressed keys
