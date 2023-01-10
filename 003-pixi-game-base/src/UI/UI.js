@@ -1,6 +1,6 @@
 import { Joystick } from "./Joystick";
 import { Button } from "./Button";
-import { getRenderer, getScreenSize } from "../globals";
+import { getRenderer, getScreenSize } from "../globalGameAPI";
 import { isMobile } from "../utils/utils";
 
 
@@ -16,7 +16,6 @@ export class UI {
     const b3 = new Button("3", 0x4949de);
     
     const mobileScaleMultiplier = isMobile() ? 1.5 : 1;
-    console.log(isMobile())
     const adjustButtonsToScreen = () => {
       const screenSize = getScreenSize();
       const buttonSize = (screenSize.height + screenSize.width) * 0.02 * mobileScaleMultiplier;

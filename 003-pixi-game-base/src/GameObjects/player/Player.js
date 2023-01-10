@@ -1,14 +1,15 @@
-import { KeyboardManager } from "../browserTools/KeyboardManager";
-import { Joystick } from "../UI/Joystick";
-import { GameObject } from "./GameObject";
+import { KeyboardManager } from "../../browserTools/KeyboardManager";
+import { Joystick } from "../../UI/Joystick";
+import { GameObject } from "../GameObject";
 
 export class Player extends GameObject {
   maxVelocity = 5;
-  constructor() {
-    super();
+  constructor(view) {
+    super(view);
+    this.view.scale.set(0.5);
     this.view.tint = 0x84cc16;
   }
-  connectWSAD(keyboard) {    
+  connectKeyboard(keyboard) {    
     // go in direction of last pressed keys
     keyboard.on(KeyboardManager.EVENTS.KEYDOWN, ({ key }) => {
       if (key === "w") {
@@ -37,7 +38,6 @@ export class Player extends GameObject {
   connectJoystick(joystick) {
     joystick.on(Joystick.EVENTS.INPUT, ({direction}) => {
       this.direction.copyFrom(direction);
-      console.log(direction)
     })
   }
 }

@@ -1,0 +1,14 @@
+{
+  "name": "pixi-game-base",
+  "main": "main.js",
+  "scripts": {
+    "start": "vite",
+    "count-lines-linux": "wc -l src/**/*.js",
+    "count-lines": "npx count-lines-of-code src"
+  },
+  "dependencies": {
+    "@types/pixi.js": "^5.0.0",
+    "pixi.js": "^7.0.5",
+    "vite": "^4.0.4"
+  }
+}

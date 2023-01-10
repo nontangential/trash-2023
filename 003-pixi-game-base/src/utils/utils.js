@@ -1,5 +1,5 @@
 export const magnitude = function(point) {
-    return Math.hypot(point.x, point.y)
+    return Math.hypot(point.x, point.y);
 }
 
 export const normalize = function(point) {
@@ -29,6 +29,7 @@ export const isMobile = function() {
 };
 
 
+// TODO: destroy, pause on alt+tab
 export const timer = function(cb, time, ctx){
   let start = performance.now();
   return {
