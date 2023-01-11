@@ -1,5 +1,5 @@
 import { BASIC_ASSETS } from "../assetManagement/BasicAssets";
-import { getRenderer, getScreenSize } from "../globalGameAPI";
+import { getRenderer, getScreenSize } from "../game/globalGameAPI";
 
 export class Background {
   view = new PIXI.Container();

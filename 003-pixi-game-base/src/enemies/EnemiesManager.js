@@ -1,6 +1,6 @@
-import { KNOWN_ASSETS } from "../../assetManagement/knownAssets";
-import { getAssetManager, getPlayerPosition, getScreenSize, getTicker } from "../../globalGameAPI";
-import { difference, timer } from "../../utils/utils";
+import { KNOWN_ASSETS } from "../assetManagement/knownAssets";
+import { getAssetManager, getPlayerPosition, getScreenSize, getTicker } from "../game/globalGameAPI";
+import { difference, timer } from "../utils/utils";
 import { Enemy } from "./Enemy";
 
 export class EnemiesManager {

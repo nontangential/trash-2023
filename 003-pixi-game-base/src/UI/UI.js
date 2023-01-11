@@ -1,6 +1,6 @@
 import { Joystick } from "./Joystick";
 import { Button } from "./Button";
-import { getRenderer, getScreenSize } from "../globalGameAPI";
+import { getRenderer, getScreenSize } from "../game/globalGameAPI";
 import { isMobile } from "../utils/utils";
 
 

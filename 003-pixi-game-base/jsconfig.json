@@ -1,8 +1,15 @@
 {
-    "compilerOptions": {
-        // "baseUrl": ".",
-        "paths": {
-            "https://cdn.skypack.dev/*": ["./node_modules/@types/*"]
-        }
+  "compilerOptions": {
+    "baseUrl": "src",
+
+    "types": [
+      "@tweakpane/core"
+    ],
+    "paths": {
+      "~/*": ["src/*"],
+      "https://cdn.skypack.dev/*": ["./node_modules/@types/*"],
+      "https://cdn.jsdelivr.net/*": ["./node_modules/@types/*"],
+      "https://cdnjs.cloudflare.com/*": ["./node_modules/@types/*"]
     }
+  }
 }

@@ -2,10 +2,9 @@
 // import 'https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.0.5/pixi.min.js';
 // import "pixi.js";
 
-
 import { BASIC_ASSETS } from "./assetManagement/BasicAssets";
 import { KNOWN_ASSETS } from "./assetManagement/knownAssets";
-import { Game } from "./Game";
+import { Game } from "./game/Game";
 
 const app = new PIXI.Application({
   resizeTo: window,
@@ -16,13 +15,10 @@ const app = new PIXI.Application({
 });
 document.body.appendChild(app.view);
 
-
 const assetList = [
-  {name: "bunny", url: "assets/bunny.png"},
-  {name: "txtr", url: "assets/txtr.png"}
+  { name: "bunny", url: "assets/bunny.png" },
+  { name: "txtr", url: "assets/txtr.png" },
 ];
-
-
 
 const assetMap = {
   [KNOWN_ASSETS.BUTTON]: BASIC_ASSETS.SQUARE_100,
@@ -31,14 +27,39 @@ const assetMap = {
   // [KNOWN_ASSETS.PLAYER]: () => new PIXI.Sprite(PIXI.utils.TextureCache["bunny"]),
   [KNOWN_ASSETS.ENEMY]: BASIC_ASSETS.SQUARE_100,
   [KNOWN_ASSETS.LIGHTNING_BOLT]: BASIC_ASSETS.LIGHTNING_BOLT,
-  [KNOWN_ASSETS.RAIN_DROP_MOVIECLIP]: BASIC_ASSETS.RAIN_DROP_MOVIECLIP
-
+  [KNOWN_ASSETS.RAIN_DROP_MOVIECLIP]: BASIC_ASSETS.RAIN_DROP_MOVIECLIP,
 };
 
 window.__stage = app.stage;
 
 const game = new Game(app, assetMap, assetList);
-game.initialize().then(() => {
+const z = game.initialize().then(() => {
   app.stage.addChild(game.view);
   game.start();
 });
+
+if (import.meta.env.DEV) {
+  // const Pane = await import("https://cdn.jsdelivr.net/npm/tweakpane@3.1.1/dist/tweakpane.min.js");
+  await import(
+    "https://cdn.jsdelivr.net/npm/tweakpane@3.1.1/dist/tweakpane.min.js"
+  );
+
+  const PARAMS = {
+    factor: 123,
+    title: "hello",
+    color: "#ff0055",
+  };
+
+  const pane = new Tweakpane.Pane();
+
+  pane.addMonitor(app.ticker, "FPS", {
+    view: "graph",
+    min: -0,
+    max: +300,
+  });
+  pane.addMonitor(app.ticker, "deltaTime", {
+    view: "graph",
+    min: -0,
+    max: +10,
+  });
+}
