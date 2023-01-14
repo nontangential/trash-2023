@@ -4,7 +4,7 @@ export class AssetManager {
 
     mapAssets(assetMap) {
         for(let name in assetMap) {
-            this.assetMap.set(name, assetMap[name])
+            this.assetMap.set(name, assetMap[name]);
         }
     }
 

@@ -32,8 +32,11 @@ export const getScreenSize = () => {
 
 
 export const getGameAreaCenter = () => {
-  return globals.gameArea.getGameAreaCenter();
+  return globals.game.gameStage.getCenter();
 };
 export const getGameArea = () => {
-  return globals.gameArea.getGameArea();
+  return globals.game.gameStage.getArea();
+};
+export const getGameAreaToLoad = () => {
+  return globals.game.gameStage.getAreaToLoad();
 };

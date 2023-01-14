@@ -1,6 +1,11 @@
 // import 'https://cdn.jsdelivr.net/npm/modern-css-reset@1.4.0/dist/reset.min.css';
 // import 'https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.0.5/pixi.min.js';
-// import "pixi.js";
+// import * as PP from "pixi.js";
+// window.PIXI = PP;
+
+// import "https://cdn.skypack.dev/pixi.js@7.1.0";
+import "https://cdn.skypack.dev/simplex-noise@4.0.0";
+
 
 import { BASIC_ASSETS } from "./assetManagement/BasicAssets";
 import { KNOWN_ASSETS } from "./assetManagement/knownAssets";
@@ -43,12 +48,6 @@ if (import.meta.env.DEV) {
   await import(
     "https://cdn.jsdelivr.net/npm/tweakpane@3.1.1/dist/tweakpane.min.js"
   );
-
-  const PARAMS = {
-    factor: 123,
-    title: "hello",
-    color: "#ff0055",
-  };
 
   const pane = new Tweakpane.Pane();
 

@@ -1,5 +1,4 @@
-import { BASIC_ASSETS } from "../assetManagement/BasicAssets";
-import { getRenderer, getScreenSize } from "../game/globalGameAPI";
+import { getRenderer } from "../game/globalGameAPI";
 
 export class CenteredGameStage {
   view = new PIXI.Container();
@@ -13,6 +12,9 @@ export class CenteredGameStage {
   }
   getArea() {
     return this._area;
+  }
+  getAreaToLoad() {
+    return this._areaToLoad;
   }
   getCenter() {
     return this.getCenter();
@@ -29,7 +31,8 @@ export class CenteredGameStage {
     this.updatePosition();
   }
 
-  _area = new PIXI.Rectangle(0,0, 640, 480)
+  _area = new PIXI.Rectangle(0,0, 640, 480);
+  _areaToLoad = new PIXI.Rectangle(-640,-480, 640*3, 480*3);
   updatePosition() {
     if (this._getCenter && this._getLimit) {
       const {width, height} = this._getLimit();
@@ -39,6 +42,12 @@ export class CenteredGameStage {
       this._area.y = -height / 2 + y
       this._area.width = width;
       this._area.height = height
+
+      this._areaToLoad.x = this._area.x - this._area.width;
+      this._areaToLoad.y = this._area.y - this._area.height;
+      this._areaToLoad.width = this._area.width * 3;
+      this._areaToLoad.height = this._area.height * 3;
+
       this.view.pivot.set(this._area.x, this._area.y);
     }
   }

@@ -1,4 +1,4 @@
-export const genetateLightningTexture = function () {
+export const genetateLightningSprite = function () {
 
   const cnv = document.createElement("canvas");
   let w = cnv.width = 512
@@ -91,5 +91,7 @@ export const genetateLightningTexture = function () {
 
 
 
-  return PIXI.Texture.from(cnv);
+  const spr = PIXI.Sprite.from(cnv);
+  spr.pivot.set(ww/2, hh);
+  return spr;
 };

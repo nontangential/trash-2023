@@ -10,6 +10,7 @@ import { ProjectileManager } from "../projectiles/ProjectileManager";
 import { setGlobalGameInstance } from "./globalGameAPI";
 import { UI } from "../UI/UI";
 import { CenteredGameStage } from "../gameObjects/CenteredGameStage";
+import { effectRecursiveRender } from "../../../004-effects/effectRecursiveRender"
 
 // const viewTree = [
 //   /*game*/[
@@ -58,7 +59,6 @@ export class Game {
   constructor(app, assetMap, assetList) {
     this.renderer = app.renderer;
     this.ticker = app.ticker;
-console.log(app.ticker)
     this.assetMap = assetMap;
     this.assetList = assetList;
   }
@@ -100,6 +100,9 @@ console.log(app.ticker)
   }
 
   start() {
+    this.gameStage.limitTo(() => ({width: this.renderer.width, height: this.renderer.height}) );
+    this.gameStage.centerAround(() => this.player.view.position);
+
     this.enemiesManager.initialize();
     this.effectsManager.initialize();
     this.keyboardManager.enable();
@@ -109,10 +112,8 @@ console.log(app.ticker)
       this.player.connectJoystick(this.ui.joystick)
     }
 
-    this.gameStage.limitTo(() => ({width: this.renderer.width, height: this.renderer.height}) );
-    this.gameStage.centerAround(() => this.player.view.position);
 
-    // CAMERA
+    // CAMERAS
     // const centerCamera = () => {
     //   this.gameStage.pivot.set(
     //     -this.renderer.width / 2 + this.player.view.x,
@@ -128,5 +129,9 @@ console.log(app.ticker)
     this.ticker.add(this.effectsManager.update, this.effectsManager);
     this.ticker.add(this.collisionManager.update, this.collisionManager);
     this.ticker.add(this.projectileManager.update, this.projectileManager);
+
+
+    
+    effectRecursiveRender(this.view, this.renderer, this.ticker);
   }
 }
